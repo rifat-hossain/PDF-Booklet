@@ -30,6 +30,25 @@ def browse_file():
         process_btn.config(state=tk.NORMAL)
         print(f"Selected file: {filename}") # You can use the filename string to open and process the file later
 
+def save_file_dialog():
+    process_btn.config(text="Working")
+    # Define file types for the dialog
+    files = [
+        ('PDF Document', '*.pdf'),
+        ('All Files', '*.*')
+    ]
+    
+    # Open the save dialog and get a file object in write mode
+    # 'defaultextension' ensures an extension is added if the user doesn't provide one
+    file = filedialog.asksaveasfile(filetypes=files, defaultextension=files)
+    
+    # Check if a file was successfully opened (user didn't cancel)
+    if file:
+        process(location=file.name)
+    else:
+        print("Save operation cancelled.")
+    process_btn.config(text="Process")
+
 def radio_change():
     if rb.get() == 2:
         seg_entry.config(state=tk.NORMAL)
@@ -44,8 +63,8 @@ def make_2_in_1(page1,page2):
     new_page.mergeTranslatedPage(page2, page1.mediaBox.upperRight[0], 0)
     return new_page
 
-def process():
-    global input_pdf
+def process(location: str):
+    global input_pdf,output_pdf
     if(rb.get() == 1):
         offset = int(start.get())-1
         output_pdf = PdfFileWriter()
@@ -64,13 +83,12 @@ def process():
                 else:
                     page2 = PageObject.createBlankPage(None,page1.mediaBox.upperRight[0],page1.mediaBox.upperRight[1])
             output_pdf.addPage(make_2_in_1(page1,page2))
-        output_pdf.write(open("result.pdf", "wb"))
+        output_pdf.write(open(location, "wb"))
     else:
         for n in range(math.ceil(int(count.get())/4/seg.get())):
             if(seg.get()*(n+1)*4<int(count.get())):
                 half = seg.get()*2
             else:
-                print("Doing it")
                 half = math.ceil((int(count.get())-seg.get()*n*4)/2)
             output_pdf = PdfFileWriter()
             offset = seg.get()*4*n+int(start.get())-1
@@ -88,7 +106,7 @@ def process():
                     else:
                         page2 = PageObject.createBlankPage(None,page1.mediaBox.upperRight[0],page1.mediaBox.upperRight[1])
                 output_pdf.addPage(make_2_in_1(page1,page2))
-            output_pdf.write(open('result{0}.pdf'.format(n), "wb"))
+            output_pdf.write(open('{0}{1}.pdf'.format(os.path.splitext(location)[0],n), "wb"))
 
 def resource_path(relative_path):
     try:
@@ -143,7 +161,7 @@ count.set("0")
 inverse_even = tk.BooleanVar()
 ttk.Checkbutton(root,text="Inversely sort even pages",variable=inverse_even).pack(pady=10)
 
-process_btn = ttk.Button(root,text="Process",state=tk.DISABLED, command=process)
+process_btn = ttk.Button(root,text="Process",state=tk.DISABLED, command=save_file_dialog)
 process_btn.pack(pady=20)
 
 def go_to_git():
