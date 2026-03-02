@@ -40,11 +40,11 @@ def save_file_dialog():
     
     # Open the save dialog and get a file object in write mode
     # 'defaultextension' ensures an extension is added if the user doesn't provide one
-    file = filedialog.asksaveasfile(filetypes=files, defaultextension=files)
-    
+    name = filedialog.asksaveasfilename(filetypes=files, defaultextension=files)
+    print(name)
     # Check if a file was successfully opened (user didn't cancel)
-    if file:
-        process(location=file.name)
+    if name:
+        process(location=name)
     else:
         print("Save operation cancelled.")
     process_btn.config(text="Process")
