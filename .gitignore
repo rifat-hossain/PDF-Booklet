@@ -1,2 +1,5 @@
-*.pdf
 .venv/
+build/
+dist/
+*.pdf
+*.spec

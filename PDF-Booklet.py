@@ -5,6 +5,9 @@ from PyPDF3 import PdfFileWriter, PdfFileReader
 from PyPDF3.pdf import PageObject
 import webbrowser
 import math
+import os
+from os import path
+import sys
 
 def browse_file():
     """Opens a file dialog and displays the selected file's path in a label."""
@@ -86,7 +89,14 @@ def process():
                         page2 = PageObject.createBlankPage(None,page1.mediaBox.upperRight[0],page1.mediaBox.upperRight[1])
                 output_pdf.addPage(make_2_in_1(page1,page2))
             output_pdf.write(open('result{0}.pdf'.format(n), "wb"))
-    
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 # Create the main window
 root = tk.Tk()
@@ -142,8 +152,8 @@ def go_to_git():
     # Use the webbrowser module to open the URL in the default browser
     webbrowser.open_new(url)
 
-photo = tk.PhotoImage(file = r"github.png")
-ttk.Button(root, text = 'Click Me !', image = photo, command=go_to_git).pack(anchor=tk.E,padx=5,pady=5)
+photo = tk.PhotoImage(file = path.abspath(path.join(path.dirname(__file__), 'github.png')))
+ttk.Button(root, image = photo, command=go_to_git).pack(anchor=tk.E,padx=5,pady=5)
 
 # Run the Tkinter event loop
 root.mainloop()
