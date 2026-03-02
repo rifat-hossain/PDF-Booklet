@@ -5,3 +5,6 @@ Recommended to use the coptic stitch after printing on "Booklet mode" and to spi
 ## Dependancies
 - PyPDF3
 - Tkinter
+
+## Screenshot
+<img width="291" height="454" alt="image" src="https://github.com/user-attachments/assets/704c3c0a-1a58-4a58-bba6-cfc7bdbf6b48" />
