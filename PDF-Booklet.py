@@ -105,7 +105,10 @@ def process(location: str):
                         page2 = input_pdf.pages[offset+2*half - i - 1]
                     else:
                         page2 = PageObject.createBlankPage(None,page1.mediaBox.upperRight[0],page1.mediaBox.upperRight[1])
-                output_pdf.addPage(make_2_in_1(page1,page2))
+                if(i%2):
+                    output_pdf.addPage(make_2_in_1(page1,page2))
+                else:
+                    output_pdf.addPage(make_2_in_1(page2,page1))
             output_pdf.write(open('{0}{1}.pdf'.format(os.path.splitext(location)[0],n), "wb"))
 
 def resource_path(relative_path):
