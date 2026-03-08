@@ -26,7 +26,7 @@ There are two algorithms to create a processed PDF for printing. They result in 
 - With the _“Split Page”_ setting, you need to cut the pages in half and stack the first half on the other before proceeding with the binding.
 - With the _“Booklet”_ setting, the printed segments must be stacked in order before using the Coptic stitch technique to bind the book.
 
-### Hint
+### Trick
 If your home printer cannot print on both sides of the paper, check _“Inversely Sort Even Pages”_ before processing. First, print the even pages. Then reinsert the printed sheets into the printer and print the odd pages on the reverse side.
 
 If your printer supports duplex printing, you can simply enable “Print on Both Sides” and print normally. In that case, there is no need to check _“Inversely Sort Even Pages.”_
